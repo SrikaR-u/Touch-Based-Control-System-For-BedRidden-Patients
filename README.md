@@ -17,7 +17,66 @@ Specifications:
 
 2. SPI EEPROM (25LC512)Operating Voltage: Must run at 3.3V when paired with LPC2148.  Memory Depth: 512 Kbits (65,536 bytes) arranged with a 128-byte page buffer.  Function: Stores the secure master unlock password.
 
-https://github.com/jjHF47t/TOUCH-BASED-DEVICE-CONTROL-SYSTEM-FOR-BEDRIDDEN-PATIENTS-#features
+## ✨ Key Features
+
+* **Secure Password Authentication:** Access control via 4x4 matrix keypad input validated against non-volatile storage.
+* **EEPROM Persistence:** Non-volatile SPI EEPROM storage for user passwords with real-time update functionality.
+* **Intuitive Touch Control:** Coordinate-mapped touch screen interface enabled upon successful login.
+* **Dual Appliance Control:**
+  * **Device 1:** Light Control (LED1)
+  * **Device 2:** Fan Control (LED2)
+* **Emergency Panic System:** One-touch emergency buzzer activation for patient assistance.
+* **Real-Time Status Monitoring:** 16x2 LCD display provides visual feedback on device status and system prompts.
+* **Interrupt-Driven Architecture:** Asynchronous UART interrupt handling for responsive touch data processing.
+
+---
+
+## ⚙️ System Architecture & Working Principle
+
+1. **Initialization:** System boots and initializes LCD, UART, SPI, GPIO matrix keypad, EEPROM, and interrupt vectors.
+2. **Authentication:**
+   * Microcontroller reads the saved password from the **AT25LC512 SPI EEPROM**.
+   * User inputs a security code via the **4x4 Matrix Keypad**.
+   * Code is verified against EEPROM memory.
+3. **Control Mode Enabled:**
+   * Touch screen monitoring activates via **UART Interrupts**.
+   * User interacts with designated touch zones to toggle **LED1 (Light)**, **LED2 (Fan)**, or trigger the **Emergency Buzzer**.
+   * Password can be updated securely at any time and saved to EEPROM.
+4. **Visual Feedback:** All state changes and interaction logs are instantly mirrored to the **16x2 LCD Display**.
+
+---
+
+## 🛠️ Hardware Architecture
+
+| Hardware Component | Specification / Function | Interfacing Protocol |
+| :--- | :--- | :--- |
+| **Microcontroller** | LPC2148 (ARM7TDMI-S 32-bit MCU) | System Core |
+| **Touch Screen** | Resistive Touch Screen Module | UART (Interrupt Driven) |
+| **EEPROM** | AT25LC512 (512 Kb) | SPI Communication |
+| **Keypad** | 4x4 Matrix Keypad | GPIO Matrix Scanning |
+| **Display** | 16x2 Character LCD | GPIO (4-bit/8-bit Parallel) |
+| **Actuators** | LEDs (Light & Fan) & Buzzer | GPIO Digital Output |
+| **Power Unit** | Regulated 3.3V / 5V DC Power Supply | Power Distribution |
+
+---
+
+## 💻 Software Architecture & Stack
+
+* **Programming Language:** Embedded C
+* **Integrated Development Environment (IDE):** Keil µVision4 / µVision5
+* **Flash Programming Tool:** Flash Magic
+* **Simulation Environment:** Proteus Design Suite (Optional)
+
+---
+
+## 🧩 Peripheral Modules
+
+* **`LCD Interface`**: Displays authentication status, operational modes, and real-time device states.
+* **`Keypad Interface`**: Scans button presses for password entry and system configuration.
+* **`UART Module`**: Intercepts raw touch screen coordinates using UART RX interrupts (`UART0`/`UART1`).
+* **`SPI EEPROM Module`**: Handles byte/page read and write cycles over SPI bus lines (MOSI, MISO, SCK, CS).
+* **`Touch Processing Module`**: Translates analog $X, Y$ coordinate frames into discrete control zones.
+* **`Device Control Module`**: Toggles digital output pins for appliance relays/LEDs and audio alarm drivers.
    
 
 
