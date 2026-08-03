@@ -18,14 +18,137 @@ Specifications:
 2. SPI EEPROM (25LC512)Operating Voltage: Must run at 3.3V when paired with LPC2148.  Memory Depth: 512 Kbits (65,536 bytes) arranged with a 128-byte page buffer.  Function: Stores the secure master unlock password.
    
 
- 🚀 Application Firmware Logic:
- The system follows a state machine topology controlled via peripheral validation layers:  Authentication Phase: The system boots and prompts for a master password via the 16x2 LCD. The entered key is compared against the valid credential block pulled from the 25LC512 EEPROM.  Activation Phase: If authenticated, the system exposes the Touch Panel command processing routine.  Control Matrix Phase: Touch coordinates map directly to peripheral driver sets:  Top Left Space ($X < 300, Y < 300$): Energizes LED1 / Device 1.  Top Right Space ($X > 700, Y < 300$): Energizes LED2 / Device 2.  Bottom Left Space ($X < 300, Y > 700$): Trips the Emergency Alert Buzzer.  Center Matrix Layer ($400 < X < 600, 400 < Y < 600$): Toggles / blinks the LCD backlight rail. 
- 
- Credential Modification Phase: When an external hardware interrupt is asserted via the Interrupt Switch (I.SW), the system enters configuration mode, updating the secure space on the EEPROM with a revised password sequence. 
+ Features
+Password-protected system access
+EEPROM-based password storage
+Password validation using keypad input
+Password update and EEPROM write functionality
+Touch-screen based device control
+Device1 (LED1) ON/OFF control
+Device2 (LED2) ON/OFF control
+Emergency buzzer activation
+LCD status monitoring
+UART interrupt-based touch data reception
+SPI communication with EEPROM
+Secure and user-friendly operation
+Hardware Requirements
+LPC2148 ARM7 Microcontroller
+Resistive Touch Screen Module
+16x2 LCD Display
+4x4 Matrix Keypad
+AT25LC512 SPI EEPROM
+LED1 (Light Control)
+LED2 (Fan Control)
+Buzzer
+Power Supply
+Software Requirements
+Embedded C
+Keil µVision IDE
+Flash Magic
+Proteus (Optional)
+Working Principle
+System initializes LCD, UART, SPI, Keypad, EEPROM, and Interrupt modules.
 
- 🛠️ Setup & Compilation Pipeline:
- PrerequisitesIDE- Keil uVision (ARM7 Compiler Toolchain)  Flash Utility: Flash Magic tool  Hardware Line Couplers: USB-to-UART bridge / MAX232 transceiver circuit for touch screen PC debugging logs.
- 
- Execution Framework:
- Clone this repository to your build environment.  Open Keil uVision, configure target hardware architecture parameters using a standard LPC2148 profile engine.Add projectmain.c alongside associated driver configuration files.Compile your binaries to generate the executable production .hex code.Couple the target controller dev board to your platform layout using serial lines, initialize Flash Magic, select your target .hex file, and flash the software to the system target.  
+Stored password is read from EEPROM.
+
+User enters a password through the keypad.
+
+Password is validated against EEPROM data.
+
+If authentication is successful:
+
+Touch screen control is enabled.
+Device1 (LED1) can be switched ON/OFF.
+Device2 (LED2) can be switched ON/OFF.
+Emergency buzzer can be activated.
+Touch control can be disabled when not required.
+Password can be modified securely.
+
+Updated password is saved permanently in EEPROM.
+
+LCD continuously displays device status and user feedback.
+
+Modules Used
+LCD Interface
+Displays authentication messages, device status, and user instructions.
+
+Keypad Interface
+Used for password entry and password modification.
+
+UART Communication
+Receives touch-screen coordinate data through interrupt-driven communication.
+
+SPI EEPROM Interface
+Stores and retrieves user passwords securely.
+
+Touch Screen Interface
+Processes touch coordinates and maps them to control actions.
+
+Interrupt Handling
+Handles touch-screen communication and password update operations efficiently.
+
+Device Control Module
+Controls LEDs and buzzer based on touch-screen input.
+
+Applications
+Smart Hospital Rooms
+Bedridden Patient Assistance Systems
+Elderly Care Systems
+Assistive Healthcare Devices
+Smart Home Automation
+Rehabilitation Support Systems
+Future Enhancements
+IoT Integration: Enable remote monitoring and control of devices through a mobile app or web dashboard.
+Wi-Fi/Bluetooth Connectivity: Allow wireless communication with caregivers and healthcare staff.
+Cloud-Based Data Storage: Store patient activity and alert logs securely in the cloud.
+Patient Health Monitoring: Integrate sensors for heart rate, body temperature, SpO₂, and blood pressure monitoring.
+Multiple Device Control: Expand the system to control additional appliances such as fans, lights, TVs, and medical equipment.
+Technologies Used
+Embedded C
+LPC2148 ARM7
+UART Communication
+SPI Protocol
+EEPROM Interfacing
+LCD Interfacing
+Keypad Interfacing
+Touch Screen Interfacing
+Interrupt Programming
+Project Outcomes
+Developed a secure touch-based control system using LPC2148.
+Implemented password authentication with EEPROM storage.
+Integrated LCD, Keypad, EEPROM, Touch Screen, UART, and SPI modules.
+Designed interrupt-driven communication for efficient operation.
+Enabled independent device control for patients with limited mobility.
+Improved understanding of embedded system design and peripheral interfacing.
+Created a modular and scalable embedded application.
+Conclusion
+The Touch-Based Device Control System for Bedridden Patients successfully provides a secure and accessible method for controlling devices using a touch interface. By integrating password authentication, EEPROM storage, UART communication, SPI interfacing, and interrupt-driven control, the system enhances patient independence and safety. The project serves as a strong foundation for future healthcare automation and smart assistive technologies.
+
+About
+Password-Protected Touch-Based Device Control System for Bedridden Patients using LPC2148. The system enables patients to control devices through a resistive touchscreen after password authentication. EEPROM stores passwords securely, while LEDs and a buzzer provide device control and emergency alerts for safe, independent operation.
+
+Resources
+Readme
+Activity
+Stars
+0 stars
+Watchers
+0 watching
+Forks
+0 forks
+Report repository
+Releases
+No releases published
+Packages
+No packages published
+Contributors
+1
+ (1)
+@jjHF47t
+jjHF47tSampth Kumar
+Languages
+C
+100%
+Footer
+
 
