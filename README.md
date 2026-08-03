@@ -6,18 +6,8 @@ A secure, embedded Password-Protected Touch-Based Device Control System designed
 The project is built around the LPC2148 (ARM7TDMI-S) microcontroller, interfacing with the following peripherals:  Microcontroller: LPC2148  Touch Input: Sunrom 1255 Resistive Touch Screen Controller (Serial interface at 9600 bps)  Security Input: 4x4 Matrix Keypad (for password authentication and modification)  Storage: Microchip 25LC512 512 Kbit SPI Serial EEPROM (for non-volatile password storage)  Display: 16x2 Character LCD (System status, coordinates, and password prompt)  Outputs & Indicators:Device 1 & 2: Dedicated LEDs acting as appliance relays  Buzzer: Emergency patient alert system  LCD Power Control: Power-saving/blink toggle option.
 
 Block Diagram:
-  --------------------       --------------------
-  | 4x4 Matrix       | ----> |                   | ----> 16x2 LCD
-  | Keypad           |       |                   |
-  +------------------+       |     LPC2148       | ----> Device 1 (LED1)
-  +------------------+       |  Microcontroller  |
-  | Interrupt Switch | ----> |                   | ----> Device 2 (LED2)
-  | (I.SW)           |       |                   |
-  +------------------+       |       [SPI]       | <---> 25LC512 EEPROM
-  +------------------+       |                   |
-  | Resistive Touch  | ----> |      [UART0]      | ----> Buzzer
-  | Screen Module    |       +-------------------+
-  +------------------+
+ <img width="927" height="566" alt="image" src="https://github.com/user-attachments/assets/e99f7516-3a55-41c3-abe2-b84c67411cf5" />
+
 
   
 ⚙️ Memory & Peripheral:
